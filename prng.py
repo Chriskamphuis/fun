@@ -21,7 +21,19 @@ class prng:
         while True:
             self.last = (self.A * self.last + self.B) % self.M
             yield round(self.minimum + float(self.last)/(self.M) *
-                        self.maximum - self.minimum)
+                        (self.maximum - self.minimum))
 
     def sample(self):
         return next(self.gen)
+
+    def randomize_list(self, lis):
+        '''
+        Randomizes an array, so it can be used more easy for some sorting
+        algorithms.
+        '''
+        max_i = len(lis)
+        for i in range(max_i - 1):
+            self.last = (self.A * self.last + self.B) % self.M
+            j = round(i + float(self.last)/(self.M) * (max_i - 1 - i))
+            lis[i], lis[j] = lis[j], lis[i]
+        return lis
