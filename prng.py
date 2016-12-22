@@ -1,5 +1,6 @@
 import os
 import sys
+import math as m
 
 
 class prng:
@@ -37,3 +38,14 @@ class prng:
             j = round(i + float(self.last)/(self.M) * (max_i - 1 - i))
             lis[i], lis[j] = lis[j], lis[i]
         return lis
+
+    def univariate_normal_random(self, mean=0, var=1):
+        '''
+        Box miller transform method used to calculate univariate normal random
+        samples.
+        '''
+        self.last = (self.A * self.last + self.B) % self.M
+        one = float(self.last)/self.M
+        self.last = (self.A * self.last + self.B) % self.M
+        two = float(self.last)/self.M
+        return (m.sqrt(-2*m.log(one))*m.cos(2*m.pi*two) + mean)*m.sqrt(var)
