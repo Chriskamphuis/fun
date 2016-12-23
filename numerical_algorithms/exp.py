@@ -15,5 +15,4 @@ def exp(a, p):
     for i in range(len(binary)):
         if binary[i] is '1':
             result *= power[i]
-
     return result
