@@ -36,3 +36,17 @@ class prime:
             if n**(p-1) % p is not 1:
                 return False
         return True
+
+    def find_prob_prime(self, num_digits, max_tests):
+        '''
+        num_digits the prime should have
+        max_tests for testing if the number is prime
+        '''
+        found = False
+        mini = 10**(num_digits-1)
+        maxi = 10*mini-1
+        sampler = prng.prng(minimum=mini, maximum=maxi)
+        while not found:
+            p = sampler.sample()
+            if self.is_prob_prime(p, max_tests):
+                return p
