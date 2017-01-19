@@ -37,6 +37,19 @@ void add_element(struct int_node* linked_list, int element){
 	return;
 }
 
+void insert_node(struct int_node* after_me, struct int_node* new_node){
+	new_node->next = after_me->next;
+	after_me->next = new_node;
+	return;
+}
+
+void delete_after(struct int_node* after_me){
+  	struct int_node* temp = after_me->next;
+	after_me->next = temp->next;
+	free(temp);
+	return;
+}
+
 struct int_node* find_node_before(struct int_node* node, int target){
   	if(node == NULL) return NULL;
 	while(node->next != NULL){
@@ -54,15 +67,18 @@ struct int_node* find_node(struct int_node* node, int target){
   	return NULL;
 }
 
+struct int_node* empty_list(void){
+	return malloc(sizeof(struct int_node));
+}
+
 int main(void){
-	struct int_node* root;	
-	root = malloc(sizeof(struct int_node));  
-	root->x = 12;
+	struct int_node* root = empty_list();  
+	root->x = 0;
 	root->next = 0;
 	int i;
 	for(i=0; i<100; i++) add_element(root, i%20);	
-	struct int_node* a = find_node_before(root, 13);
+	struct int_node* temp = find_node(root, 12);
+	delete_after(temp);
 	print_list(root);
-	print_list(a);
 	return 0;
 }
